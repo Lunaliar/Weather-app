@@ -5,20 +5,19 @@ const apiKey = process.env.REACT_APP_KEY;
 
 function App() {
 	const [data, setData] = useState({});
-	const [isMounted, setMounted] = useState(false);
 	const [geo, setGeo] = useState({
 		name: "",
 		units: true,
 	});
-
-	const cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
+	const [isMounted, setMounted] = useState(false);
 
 	useEffect(() => {
+		const cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
 		if (isMounted) {
 			axios
 				.get(cityUrl)
 				.then((res) => {
-					console.log("Getting Coordinates");
+					console.log("getting data");
 					axios
 						.get(
 							`https://api.openweathermap.org/data/2.5/weather?lat=${
@@ -28,11 +27,8 @@ function App() {
 							}`
 						)
 						.then((res) => {
-							console.log("Setting Weather");
+							console.log("setting data");
 							setData(res.data);
-						})
-						.catch((err) => {
-							console.log(err);
 						});
 				})
 				.catch((err) => {
