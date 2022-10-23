@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "./style.scss";
 const apiKey = process.env.REACT_APP_KEY;
 
 function App() {
@@ -7,72 +8,43 @@ function App() {
 	const [isMounted, setMounted] = useState(false);
 	const [geo, setGeo] = useState({
 		name: "",
-		lon: "",
-		lat: "",
 		units: true,
 	});
 
-	const url = {
-		city: `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`,
-		weather: `https://api.openweathermap.org/data/2.5/weather?lat=${
-			geo.lat
-		}&lon=${geo.lon}&appid=${apiKey}&units=${
-			geo.units ? "imperial" : "metric"
-		}`,
-	};
+	const cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
 
-	//? Default set for geo state
-	// useEffect(() => {
-	// 	axios
-	// 		.get(url.city)
-	// 		.then((res) => {
-	// 			console.log("SettingGeo");
-	// 			setGeo({ ...geo, lat: res.data[0].lat, lon: res.data[0].lon });
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// 	return () => {
-	// 		axios
-	// 			.get(url.weather)
-	// 			.then((res) => {
-	// 				setData(res.data);
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err);
-	// 			});
-	// 	};
-	// }, []);
-	//? update data based on changes in geo state
 	useEffect(() => {
 		if (isMounted) {
 			axios
-				.get(url.city)
+				.get(cityUrl)
 				.then((res) => {
-					console.log("Setting Geo");
-					setGeo({ ...geo, lat: res.data[0].lat, lon: res.data[0].lon });
+					console.log("Getting Coordinates");
+					axios
+						.get(
+							`https://api.openweathermap.org/data/2.5/weather?lat=${
+								res.data[0].lat
+							}&lon=${res.data[0].lon}&appid=${apiKey}&units=${
+								geo.units ? "imperial" : "metric"
+							}`
+						)
+						.then((res) => {
+							console.log("Setting Weather");
+							setData(res.data);
+						})
+						.catch((err) => {
+							console.log(err);
+						});
 				})
 				.catch((err) => {
 					console.log(err);
 				});
-			return () => {
-				axios
-					.get(url.weather)
-					.then((res) => {
-						console.log("Setting Weather");
-						setData(res.data);
-						setMounted(false);
-					})
-					.catch((err) => {
-						console.log(err);
-					});
-			};
+		} else {
+			setMounted(true);
 		}
 	}, [geo]);
 
 	const handleKey = (e) => {
 		if (e.key === "Enter") {
-			setMounted(true);
 			setGeo({ ...geo, name: e.target.value });
 		}
 	};
@@ -85,11 +57,18 @@ function App() {
 					type="text"
 					onKeyDown={handleKey}
 				/>
+				<button
+					onClick={() => {
+						setGeo({ ...geo, units: !geo.units });
+					}}
+				>
+					F/C
+				</button>
 			</div>
 			{data.main && (
 				<>
-					<h1>Name:{data?.name}</h1>
-					<h2>{`Temp: ${data?.main.temp} ${
+					<h1>{data?.name}</h1>
+					<h2>{`${data?.main.temp} ${
 						geo.units ? "fahrenheit" : "celcius"
 					}`}</h2>
 					<img
