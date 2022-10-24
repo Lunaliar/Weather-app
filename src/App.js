@@ -17,11 +17,9 @@ function App() {
 	useEffect(() => {
 		const cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
 		const getWeather = () => {
-			console.log("step 1");
 			axios
 				.get(cityUrl)
 				.then((res) => {
-					console.log("step 2");
 					setCityData(res.data);
 					return axios.get(
 						`https://api.openweathermap.org/data/2.5/weather?lat=${
@@ -32,7 +30,6 @@ function App() {
 					);
 				})
 				.then((res) => {
-					console.log("step 3");
 					setData(res.data);
 				})
 				.catch((err) => {
@@ -42,7 +39,6 @@ function App() {
 		if (mounted.current === true) {
 			getWeather();
 		} else {
-			console.log("set mount as true");
 			mounted.current = true;
 		}
 	}, [geo]);
@@ -178,7 +174,7 @@ function App() {
 			) : (
 				<div className="loader">
 					<h1>Sav's Wonderous Weather App</h1>
-					<i class="fa-solid fa-cloud-sun" />
+					<i className="fa-solid fa-cloud-sun" />
 					{search()}
 				</div>
 			)}
