@@ -1,7 +1,9 @@
 :root {
 	--aqua: #59c9a5;
 }
-
+.hidden {
+	display: none;
+}
 .App {
 	overflow: hidden;
 	font-family: lato;
@@ -23,6 +25,7 @@
 	}
 
 	.loader {
+		transition: all 1s ease-in-out;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -34,6 +37,7 @@
 		}
 	}
 	.main {
+		transition: all 1s ease-in-out;
 		padding: 1.5rem 0 0 0;
 		display: flex;
 		width: 100%;

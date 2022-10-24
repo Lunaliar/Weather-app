@@ -84,7 +84,7 @@ function App() {
 	return (
 		<div className="App">
 			{data.main ? (
-				<div className="main">
+				<div className="main ">
 					{search()}
 
 					<div className="major-conditions">
@@ -178,7 +178,7 @@ function App() {
 					{search()}
 				</div>
 			)}
-			<div className="footer">Lunaliar © 2022</div>
+			<div className="footer">Sav Costabile © 2022</div>
 		</div>
 	);
 }
