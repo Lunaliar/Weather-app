@@ -62,74 +62,127 @@ function App() {
 		const hours = date.getHours();
 		// Minutes part from the timestamp
 		const minutes = "0" + date.getMinutes();
-		// Seconds part from the timestamp
-		const seconds = "0" + date.getSeconds();
-
 		// Will display time in 10:30:23 format
-		const formattedTime =
-			hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
+		const formattedTime = hours + ":" + minutes.substr(-2);
 
 		return formattedTime;
 	};
+	const handleUnits = () => {
+		setGeo({ ...geo, units: !geo.units });
+	};
 
-	return (
-		<div className="App">
+	const search = () => {
+		return (
 			<div className="search">
 				<input
-					placeholder="Pick a city..."
+					required
 					type="text"
 					onKeyDown={handleKey}
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 				/>
+				<span>Pick a city...</span>
 			</div>
-			{data.main && (
-				<div>
-					<div className="majorConditions">
-						<h1>{data?.name}</h1>
-						<h4>{cityData[0]?.state}</h4>
-						<h2>{`${data?.main.temp} `}</h2>
-						<button
-							onClick={() => {
-								setGeo({ ...geo, units: !geo.units });
-							}}
-						>
-							{geo.units ? "°F" : "°C"}
-						</button>
+		);
+	};
+	return (
+		<div className="App">
+			{data.main ? (
+				<div className="main">
+					{search()}
+
+					<div className="major-conditions">
+						<div className="button">
+							<button
+								className="change-units"
+								title="Change Units"
+								onClick={handleUnits}
+							>
+								{geo.units ? "Metric" : "Imperial"} units
+							</button>
+						</div>
+						<div className="info">
+							<span className="city-name">{data?.name}</span>
+							<span className="state-name">{cityData[0]?.state}</span>
+							<span className="current-temp">{`${data?.main.temp} ${
+								geo.units ? "°F" : "°C"
+							}`}</span>
+						</div>
 					</div>
-					<img
-						src={`http://openweathermap.org/img/wn/${data?.weather[0].icon}@2x.png`}
-						alt=""
-					/>
-					<div className="minorConditions">
-						<div title="Sunrise">
-							<i class="fa-solid fa-sun" />{" "}
-							<span>{getTime(data.sys?.sunrise)}</span> AM
+
+					<div className="type-icon">
+						<span className="weather-main">{data.weather[0]?.main}</span>
+						<img
+							title={data.weather[0]?.main}
+							src={`http://openweathermap.org/img/wn/${data?.weather[0].icon}@2x.png`}
+							alt="Weather Icon"
+						/>
+					</div>
+
+					<div className="minor-conditions">
+						<div className="left">
+							<div
+								className="sunrise"
+								title="Sunrise"
+							>
+								<i className="fa-solid fa-sun" />
+								<span>{getTime(data.sys?.sunrise)}</span>
+							</div>
+							<div
+								className="sunset"
+								title="Sunset"
+							>
+								<i className="fa-solid fa-moon" />
+								<span>{getTime(data.sys?.sunset)}</span>
+							</div>
 						</div>
-						<div title="Sunset">
-							{" "}
-							<i className="fa-solid fa-moon" />
-							<span>{getTime(data.sys?.sunset)}</span> PM
+
+						<div className="center">
+							<div
+								className="hi-temp"
+								title="Hi-Temp"
+							>
+								<i className="fa-solid fa-temperature-arrow-up" />
+								<span>{data.main?.temp_max}</span>
+								{geo.units ? " °F" : " °C"}
+							</div>
+							<div
+								className="low-temp"
+								title="Low-Temp"
+							>
+								<i className="fa-solid fa-temperature-arrow-down" />
+								<span>{data.main?.temp_min}</span>
+								{geo.units ? " °F" : " °C"}
+							</div>
 						</div>
-						<div>
-							<i class="fa-solid fa-temperature-arrow-up" />{" "}
-							<span>{data.main?.temp_max}</span>
-						</div>
-						<div>
-							<i class="fa-solid fa-temperature-arrow-down" />{" "}
-							<span>{data.main?.temp_min}</span>
-						</div>
-						<div>
-							<i className="fa-solid fa-droplet" />{" "}
-							<span>{data.main?.humidity}</span>
-						</div>
-						<div title="Wind">
-							{" "}
-							<i className="fa-solid fa-wind" /> <span>{data.wind?.speed}</span>
+						<div className="right">
+							<div
+								className="humiditity"
+								title="Humidity"
+							>
+								<i className="fa-solid fa-droplet" />
+								<span>{data.main?.humidity}</span>
+								{" %"}
+							</div>
+							<div
+								className="wind"
+								title="Wind"
+							>
+								<i className="fa-solid fa-wind" />
+								<span>{data.wind?.speed}</span>
+								{geo.units ? " mph" : " km/h"}
+							</div>
 						</div>
 					</div>
 				</div>
+			) : (
+				<div className="loader">
+					<h1>Sav's Wonderous Weather App</h1>
+					<i class="fa-solid fa-cloud-sun" />
+					{search()}
+				</div>
 			)}
+			<div className="footer">Lunaliar © 2022</div>
 		</div>
 	);
 }
