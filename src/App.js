@@ -11,45 +11,6 @@ function App() {
 		name: "",
 		units: true,
 	});
-	//!Data Used
-	const componentParams = [
-		{
-			title: "Hi-Temp",
-			icon: "temperature-arrow-up",
-			data: data.main?.temp_max,
-			unit: geo.units ? " °F" : " °C",
-		},
-		{
-			title: "Low-Temp",
-			icon: "temperature-arrow-down",
-			data: data.main?.temp_min,
-			unit: geo.units ? " °F" : " °C",
-		},
-		{
-			title: "Hi-Temp",
-			icon: "temperature-arrow-up",
-			data: data.main?.temp_max,
-			unit: geo.units ? " °F" : " °C",
-		},
-		{
-			title: "Low-Temp",
-			icon: "temperature-arrow-down",
-			data: data.main?.temp_min,
-			unit: geo.units ? " °F" : " °C",
-		},
-		{
-			title: "Humidity",
-			icon: "droplet",
-			data: data.main?.humidity,
-			unit: " %",
-		},
-		{
-			title: "Wind",
-			icon: "wind",
-			data: data.wind?.speed,
-			unit: geo.units ? " mph" : " km/h",
-		},
-	];
 
 	//? useEffect & Mount
 	const mounted = useRef(false);
@@ -115,7 +76,7 @@ function App() {
 			</div>
 		);
 	};
-	const minorPairings = (clssnme, first, second) => {
+	const minorPairing = (clssnme, first, second) => {
 		return (
 			<div className={clssnme}>
 				{minorComponent(first.title, first.icon, first.data, first.unit)}
@@ -182,6 +143,46 @@ function App() {
 		);
 	};
 
+	//? Return
+	//!Data Used
+	const componentParams = [
+		{
+			title: "Sunrise",
+			icon: "sun",
+			data: getTime(data.sys?.sunrise),
+			unit: " AM",
+		},
+		{
+			title: "Sunset",
+			icon: "moon",
+			data: getTime(data.sys?.sunset),
+			unit: " PM",
+		},
+		{
+			title: "Hi-Temp",
+			icon: "temperature-arrow-up",
+			data: data.main?.temp_max,
+			unit: geo.units ? " °F" : " °C",
+		},
+		{
+			title: "Low-Temp",
+			icon: "temperature-arrow-down",
+			data: data.main?.temp_min,
+			unit: geo.units ? " °F" : " °C",
+		},
+		{
+			title: "Humidity",
+			icon: "droplet",
+			data: data.main?.humidity,
+			unit: " %",
+		},
+		{
+			title: "Wind",
+			icon: "wind",
+			data: data.wind?.speed,
+			unit: geo.units ? " mph" : " km/h",
+		},
+	];
 	return (
 		<div className="App">
 			{data.main ? (
@@ -194,9 +195,9 @@ function App() {
 					{weatherIcon()}
 
 					<div className="minor-conditions">
-						{minorPairings("left", componentParams[0], componentParams[1])}
-						{minorPairings("center", componentParams[2], componentParams[3])}
-						{minorPairings("right", componentParams[4], componentParams[5])}
+						{minorPairing("left", componentParams[0], componentParams[1])}
+						{minorPairing("center", componentParams[2], componentParams[3])}
+						{minorPairing("right", componentParams[4], componentParams[5])}
 					</div>
 				</div>
 			) : (
