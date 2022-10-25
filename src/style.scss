@@ -1,9 +1,7 @@
 :root {
 	--aqua: #59c9a5;
 }
-.hidden {
-	display: none;
-}
+
 .App {
 	overflow: hidden;
 	font-family: lato;
@@ -45,17 +43,18 @@
 		align-items: center;
 		height: auto;
 		.major-conditions {
-			width: 50%;
+			width: 80%;
 			display: flex;
 			padding: 1rem;
 			.info {
 				display: flex;
 				flex-direction: column;
 				padding-top: 1rem;
-				width: 55%;
+				width: 60%;
 				margin-right: 2rem;
 				.city-name {
 					font-size: 2rem;
+					display: inline-block;
 					padding: 0.15rem;
 				}
 				.state-name {
@@ -64,7 +63,7 @@
 				}
 				.current-temp {
 					font-weight: 800;
-					font-size: 3.5rem;
+					font-size: 3.3rem;
 				}
 			}
 			.button {
@@ -75,9 +74,9 @@
 				button {
 					background-color: transparent;
 					color: var(--aqua);
-					height: 6rem;
 					margin-right: 2rem;
-					width: 6rem;
+					height: 5rem;
+					width: 5rem;
 					border-radius: 50%;
 					padding: 5px 10px;
 					border-color: var(--aqua);
