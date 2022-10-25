@@ -4,14 +4,14 @@ import "./style.scss";
 const apiKey = process.env.REACT_APP_KEY;
 
 function App() {
-	//!State
+	//?State
 	const [data, setData] = useState({});
 	const [input, setInput] = useState("");
 	const [geo, setGeo] = useState({
 		name: "",
 		units: true,
 	});
-
+	//!Data Used
 	const componentParams = [
 		{
 			title: "Hi-Temp",
@@ -53,7 +53,6 @@ function App() {
 
 	//? useEffect & Mount
 	const mounted = useRef(false);
-
 	useEffect(() => {
 		const cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
 		const getWeather = () => {
@@ -107,20 +106,6 @@ function App() {
 		setGeo({ ...geo, units: !geo.units });
 	};
 	//? Components
-	const search = () => {
-		return (
-			<div className="search">
-				<input
-					required
-					value={input}
-					type="text"
-					onKeyDown={handleKey}
-					onChange={(e) => setInput(e.target.value)}
-				/>
-				<span>Pick a city...</span>
-			</div>
-		);
-	};
 	const minorComponent = (title, icon, data, unit) => {
 		return (
 			<div title={`${title}`}>
@@ -138,25 +123,41 @@ function App() {
 			</div>
 		);
 	};
+	const search = () => {
+		return (
+			<div className="search">
+				<input
+					required
+					value={input}
+					type="text"
+					onKeyDown={handleKey}
+					onChange={(e) => setInput(e.target.value)}
+				/>
+				<span>Pick a city...</span>
+			</div>
+		);
+	};
 	const unitButton = () => {
 		return (
-			<button
-				className="change-units"
-				title="Change Units"
-				onClick={handleUnits}
-			>
-				{geo.units ? "Metric" : "Imperial"} units
-			</button>
+			<div className="button">
+				<button
+					className="change-units"
+					title="Change Units"
+					onClick={handleUnits}
+				>
+					{geo.units ? "Metric" : "Imperial"} units
+				</button>
+			</div>
 		);
 	};
 	const mainInfo = () => {
 		return (
-			<>
+			<div className="info">
 				<span className="city-name">{data?.name}</span>
 				<span className="current-temp">{`${data?.main.temp} ${
 					geo.units ? "°F" : "°C"
 				}`}</span>
-			</>
+			</div>
 		);
 	};
 	const weatherIcon = () => {
@@ -171,6 +172,15 @@ function App() {
 			</div>
 		);
 	};
+	const loader = () => {
+		return (
+			<div className="loader">
+				<h1>Sav's Wonderous Weather App</h1>
+				<i className="fa-solid fa-cloud-sun" />
+				{search()}
+			</div>
+		);
+	};
 
 	return (
 		<div className="App">
@@ -178,8 +188,8 @@ function App() {
 				<div className="main ">
 					{search()}
 					<div className="major-conditions">
-						<div className="button">{unitButton()}</div>
-						<div className="info">{mainInfo()}</div>
+						{unitButton()}
+						{mainInfo()}
 					</div>
 					{weatherIcon()}
 
@@ -190,11 +200,7 @@ function App() {
 					</div>
 				</div>
 			) : (
-				<div className="loader">
-					<h1>Sav's Wonderous Weather App</h1>
-					<i className="fa-solid fa-cloud-sun" />
-					{search()}
-				</div>
+				loader()
 			)}
 			<div className="footer">Sav Costabile © 2022</div>
 		</div>
