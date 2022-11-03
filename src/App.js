@@ -12,7 +12,7 @@ function App() {
 		name: "",
 		units: true,
 	});
-
+	console.log(apiKeyVercel);
 	//? useEffect & Mount
 	const mounted = useRef(false);
 	useEffect(() => {
