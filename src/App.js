@@ -2,7 +2,6 @@ import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import "./style.scss";
 const apiKey = process.env.REACT_APP_KEY;
-const apiKeyVercel = process.env.API_KEY;
 
 function App() {
 	//?State
@@ -12,11 +11,11 @@ function App() {
 		name: "",
 		units: true,
 	});
-	console.log(apiKeyVercel);
+	console.log(apiKey);
 	//? useEffect & Mount
 	const mounted = useRef(false);
 	useEffect(() => {
-		const cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKeyVercel}`;
+		const cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
 		const getWeather = () => {
 			axios
 				.get(cityUrl)
