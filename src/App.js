@@ -11,7 +11,6 @@ function App() {
 		name: "",
 		units: true,
 	});
-	console.log(apiKey);
 	//? useEffect & Mount
 	const mounted = useRef(false);
 	useEffect(() => {
