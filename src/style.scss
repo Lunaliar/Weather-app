@@ -45,36 +45,33 @@
 		.major-conditions {
 			width: 80%;
 			display: flex;
+			justify-content: space-between;
+			align-items: center;
 			padding: 1rem;
 			.info {
 				display: flex;
 				flex-direction: column;
+				justify-content: center;
+				align-items: center;
 				padding-top: 1rem;
-				width: 60%;
-				margin-right: 2rem;
+				width: 100%;
 				.city-name {
 					font-size: 2rem;
-					display: inline-block;
-					padding: 0.15rem;
-				}
-				.state-name {
-					font-size: 1rem;
 					padding: 0.15rem;
 				}
 				.current-temp {
 					font-weight: 800;
-					font-size: 3.3rem;
+					font-size: 3rem;
 				}
 			}
 			.button {
 				display: flex;
-				justify-content: flex-end;
+				justify-content: center;
 				align-items: center;
-				width: 50%;
+				width: 100%;
 				button {
 					background-color: transparent;
 					color: var(--aqua);
-					margin-right: 2rem;
 					height: 5rem;
 					width: 5rem;
 					border-radius: 50%;
@@ -89,11 +86,13 @@
 			justify-content: center;
 			align-items: center;
 			width: 100%;
+			margin-top: 3rem;
 			span {
 				font-size: 1.5rem;
 			}
 			img {
-				width: 15%;
+				height: 5rem;
+				width: 5rem;
 			}
 		}
 		.minor-conditions {
@@ -101,7 +100,7 @@
 			align-items: center;
 			justify-content: space-around;
 			gap: 1rem;
-			margin: auto 0;
+			margin: auto 0 1rem 0;
 			font-size: 1.5rem;
 			padding-left: 2rem;
 			i {
@@ -121,6 +120,7 @@
 .search {
 	position: relative;
 	width: 250px;
+	margin-top: 1rem;
 	input {
 		box-sizing: border-box;
 		width: 100%;

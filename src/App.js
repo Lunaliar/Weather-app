@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import "./style.scss";
 const apiKey = process.env.REACT_APP_KEY;
 
@@ -15,7 +15,7 @@ function App() {
 	//? useEffect & Mount
 	const mounted = useRef(false);
 	useEffect(() => {
-		const cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
+		const cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
 		const getWeather = () => {
 			axios
 				.get(cityUrl)
@@ -45,7 +45,7 @@ function App() {
 	//! Functions
 	const handleKey = (e) => {
 		if (e.key === "Enter") {
-			setGeo({ ...geo, name: input });
+			setGeo({...geo, name: input});
 			setInput("");
 		}
 	};
@@ -64,19 +64,19 @@ function App() {
 		return formattedTime;
 	};
 	const handleUnits = () => {
-		setGeo({ ...geo, units: !geo.units });
+		setGeo({...geo, units: !geo.units});
 	};
 	//? Components
-	const minorComponent = (title, icon, data, unit) => {
-		return (
-			<div title={`${title}`}>
-				<i className={`fa-solid fa-${icon}`} />
-				<span>{data}</span>
-				{unit}
-			</div>
-		);
-	};
 	const minorPairing = (clssnme, first, second) => {
+		const minorComponent = (title, icon, data, unit) => {
+			return (
+				<div title={`${title}`}>
+					<i className={`fa-solid fa-${icon}`} />
+					<span>{data}</span>
+					{unit}
+				</div>
+			);
+		};
 		return (
 			<div className={clssnme}>
 				{minorComponent(first.title, first.icon, first.data, first.unit)}
@@ -136,14 +136,13 @@ function App() {
 	const loader = () => {
 		return (
 			<div className="loader">
-				<h1>Sav's Wonderous Weather App</h1>
+				<h1>Wonderous Weather App</h1>
 				<i className="fa-solid fa-cloud-sun" />
 				{search()}
 			</div>
 		);
 	};
 
-	//? Return
 	//!Data Used
 	const componentParams = [
 		{
@@ -180,19 +179,21 @@ function App() {
 			title: "Wind",
 			icon: "wind",
 			data: data.wind?.speed,
-			unit: geo.units ? " mph" : " km/h",
+			unit: geo.units ? " mph" : " kmh",
 		},
 	];
+
+	//? Return
 	return (
 		<div className="App">
 			{data.main ? (
 				<div className="main ">
-					{search()}
 					<div className="major-conditions">
 						{unitButton()}
 						{mainInfo()}
+						{weatherIcon()}
 					</div>
-					{weatherIcon()}
+					{search()}
 
 					<div className="minor-conditions">
 						{minorPairing("left", componentParams[0], componentParams[1])}
@@ -203,7 +204,7 @@ function App() {
 			) : (
 				loader()
 			)}
-			<div className="footer">Sav Costabile © 2022</div>
+			<div className="footer">Sav © 2022</div>
 		</div>
 	);
 }
