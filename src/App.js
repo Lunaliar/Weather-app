@@ -1,53 +1,66 @@
 import axios from "axios";
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import "./style.scss";
 const apiKey = process.env.REACT_APP_KEY;
+
+// const cityURL = `https://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=5&appid=${apiKey}`;
+
+// const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${
+// 	geo.units ? "imperial" : "metric"
+// }`;
 
 function App() {
 	//?State
 	const [data, setData] = useState({});
+	const [cityNames, setCityNames] = useState({});
 	const [input, setInput] = useState("");
 	const [geo, setGeo] = useState({
 		name: "",
 		units: true,
 	});
-	//? useEffect & Mount
-	const mounted = useRef(false);
-	useEffect(() => {
-		const cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${geo.name.toLowerCase()}&limit=1&appid=${apiKey}`;
-		const getWeather = () => {
-			axios
-				.get(cityUrl)
-				.then((res) => {
-					return axios.get(
-						`https://api.openweathermap.org/data/2.5/weather?lat=${
-							res.data[0].lat
-						}&lon=${res.data[0].lon}&appid=${apiKey}&units=${
-							geo.units ? "imperial" : "metric"
-						}`
-					);
-				})
-				.then((res) => {
-					setData(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		};
-		if (mounted.current === true) {
-			getWeather();
-		} else {
-			mounted.current = true;
-		}
-	}, [geo]);
+	const [cities, setCities] = useState([]);
 
-	//! Functions
-	const handleKey = (e) => {
-		if (e.key === "Enter") {
-			setGeo({...geo, name: input});
-			setInput("");
+	//? Axios callers
+	const getCities = (name) => {
+		if (name !== "" && name.length >= 1) {
+			try {
+				axios
+					.get(
+						`https://api.openweathermap.org/geo/1.0/direct?q=${name.toLowerCase()}&limit=3&appid=${apiKey}`
+					)
+					.then((res) => {
+						setCities(res.data);
+					});
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			setCities([]);
+			return;
 		}
 	};
+
+	const getWeather = (lat, lon, cityName, cityState) => {
+		setCityNames({});
+		axios
+			.get(
+				`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${
+					geo.units ? "imperial" : "metric"
+				}`
+			)
+			.then((res) => {
+				setCityNames({name: cityName, state: cityState});
+				setCities([]);
+				setInput("");
+				setData(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	//! Functions
+
 	const getTime = (time) => {
 		const unix_timestamp = time;
 		// Create a new JavaScript Date object based on the timestamp
@@ -62,10 +75,13 @@ function App() {
 
 		return formattedTime;
 	};
+
 	const handleUnits = () => {
 		setGeo({...geo, units: !geo.units});
 	};
+
 	//? Components
+
 	const minorPairing = (clssnme, first, second) => {
 		const minorComponent = (title, icon, data, unit) => {
 			return (
@@ -83,6 +99,7 @@ function App() {
 			</div>
 		);
 	};
+
 	const search = () => {
 		return (
 			<div className="search">
@@ -90,13 +107,36 @@ function App() {
 					required
 					value={input}
 					type="text"
-					onKeyDown={handleKey}
-					onChange={(e) => setInput(e.target.value)}
+					onChange={(e) => {
+						setInput(e.target.value);
+						getCities(e.target.value);
+					}}
 				/>
 				<span>Pick a city...</span>
+				{cities && cities.length > 1 ? (
+					<div className="search-results">
+						{cities.map((c, i) => {
+							const result = `${c.name}${
+								c.state && c.name !== c.state ? `, ${c.state}` : ""
+							}`.substring(0, 27);
+							return (
+								<div
+									className="search-result"
+									key={c.name + c.state + i}
+									onClick={() => getWeather(c.lat, c.lon, c.name, c.state)}
+								>
+									{result.length > 25 ? result + "..." : result}
+								</div>
+							);
+						})}
+					</div>
+				) : (
+					""
+				)}
 			</div>
 		);
 	};
+
 	const unitButton = () => {
 		return (
 			<div className="button">
@@ -110,16 +150,21 @@ function App() {
 			</div>
 		);
 	};
+
 	const mainInfo = () => {
 		return (
 			<div className="info">
-				<span className="city-name">{data?.name}</span>
+				<span className="city-name">{cityNames?.name}</span>
+				{cityNames.name !== cityNames.state && (
+					<span className="city-name">{cityNames?.state}</span>
+				)}
 				<span className="current-temp">{`${data?.main.temp} ${
 					geo.units ? "°F" : "°C"
 				}`}</span>
 			</div>
 		);
 	};
+
 	const weatherIcon = () => {
 		return (
 			<div className="type-icon">
@@ -132,11 +177,12 @@ function App() {
 			</div>
 		);
 	};
+
 	const loader = () => {
 		return (
 			<div className="loader">
-				<h1>Wonderous Weather App</h1>
 				<i className="fa-solid fa-cloud-sun" />
+				<h1>Weather My City?</h1>
 				{search()}
 			</div>
 		);
@@ -193,7 +239,6 @@ function App() {
 						{weatherIcon()}
 					</div>
 					{search()}
-
 					<div className="minor-conditions">
 						{minorPairing("left", componentParams[0], componentParams[1])}
 						{minorPairing("center", componentParams[2], componentParams[3])}

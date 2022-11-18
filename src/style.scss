@@ -1,5 +1,8 @@
 :root {
 	--aqua: #59c9a5;
+
+	--bgcolor: #23395b;
+	--darkbgcolor: #172944;
 }
 
 .App {
@@ -10,12 +13,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background-color: #23395b;
+	background-color: var(--bgcolor);
 	color: var(--aqua);
 	.footer {
 		margin-top: auto;
 		height: 10vh;
-		background-color: #172944;
+		background-color: var(--darkbgcolor);
 		display: flex;
 		align-items: center;
 		width: 100vw;
@@ -30,8 +33,8 @@
 		align-items: center;
 		margin-top: 1.5rem;
 		i {
-			font-size: 10rem;
-			margin-bottom: 1.5rem;
+			font-size: 7rem;
+			margin-top: 1.5rem;
 		}
 	}
 	.main {
@@ -47,7 +50,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 1rem;
+			padding: 0.5rem 1rem;
 			.info {
 				display: flex;
 				flex-direction: column;
@@ -55,20 +58,22 @@
 				align-items: center;
 				padding-top: 1rem;
 				width: 100%;
+				height: 8rem;
 				.city-name {
 					font-size: 2rem;
 					padding: 0.15rem;
 				}
 				.current-temp {
 					font-weight: 800;
-					font-size: 3rem;
+					font-size: 2.5rem;
 				}
 			}
 			.button {
+				height: 8rem;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				width: 100%;
+				width: auto;
 				button {
 					background-color: transparent;
 					color: var(--aqua);
@@ -79,20 +84,20 @@
 					border-color: var(--aqua);
 				}
 			}
-		}
-		.type-icon {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			margin-top: 3rem;
-			span {
-				font-size: 1.5rem;
-			}
-			img {
-				height: 5rem;
-				width: 5rem;
+			.type-icon {
+				display: flex;
+				height: 8rem;
+				flex-direction: column;
+				justify-content: flex-end;
+				align-items: center;
+				width: auto;
+				span {
+					font-size: 1.5rem;
+				}
+				img {
+					height: 5rem;
+					width: 5rem;
+				}
 			}
 		}
 		.minor-conditions {
@@ -148,12 +153,23 @@
 		font-size: 0.65em;
 		color: var(--aqua);
 		padding: 0 10px;
-		background-color: #23395b;
+		background-color: var(--bgcolor);
 		border-left: 1px solid var(--aqua);
 		border-right: 1px solid var(--aqua);
 	}
 	input:valid,
 	input:focus {
 		border-color: var(--aqua);
+	}
+	.search-results {
+		border: 1px solid var(--aqua);
+		border-top: none;
+		.search-result {
+			cursor: pointer;
+			padding: 0.1rem 0.2rem;
+		}
+		.search-result:hover {
+			background-color: var(--darkbgcolor);
+		}
 	}
 }
