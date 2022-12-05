@@ -188,7 +188,7 @@ function App() {
 		);
 	};
 
-	//!Data Used
+	//! Component Data
 	const componentParams = [
 		{
 			title: "Sunrise",
@@ -240,9 +240,17 @@ function App() {
 					</div>
 					{search()}
 					<div className="minor-conditions">
-						{minorPairing("left", componentParams[0], componentParams[1])}
-						{minorPairing("center", componentParams[2], componentParams[3])}
-						{minorPairing("right", componentParams[4], componentParams[5])}
+						{minorPairing("left minor", componentParams[0], componentParams[1])}
+						{minorPairing(
+							"center minor",
+							componentParams[4],
+							componentParams[5]
+						)}
+						{minorPairing(
+							"right minor",
+							componentParams[2],
+							componentParams[3]
+						)}
 					</div>
 				</div>
 			) : (

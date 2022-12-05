@@ -8,7 +8,7 @@
 .App {
 	overflow: hidden;
 	font-family: lato;
-	height: 100vh;
+	min-height: 100vh;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -31,54 +31,52 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin-top: 1.5rem;
+		margin-top: 25%;
 		i {
-			font-size: 7rem;
-			margin-top: 1.5rem;
+			font-size: 7em;
 		}
 	}
 	.main {
 		transition: all 1s ease-in-out;
-		padding: 1.5rem 0 0 0;
+		padding: 1.5em 0 0 0;
 		display: flex;
 		width: 100%;
 		flex-direction: column;
 		align-items: center;
-		height: 90vh;
+		min-height: 90vh;
 		.major-conditions {
-			width: 80%;
+			min-width: 80%;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 0.5rem 1rem;
+			padding: 0.5em 1em;
 			.info {
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				padding-top: 1rem;
-				width: 100%;
-				height: 8rem;
+				padding-top: 1em;
+				max-width: 100%;
+				max-height: 8em;
 				.city-name {
-					font-size: 2rem;
-					padding: 0.15rem;
+					font-size: 2em;
+					padding: 0.15em;
 				}
 				.current-temp {
 					font-weight: 800;
-					font-size: 2.5rem;
+					font-size: 2.5em;
 				}
 			}
 			.button {
-				height: 8rem;
+				max-height: 8em;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				width: auto;
 				button {
 					background-color: transparent;
 					color: var(--aqua);
-					height: 5rem;
-					width: 5rem;
+					height: 5em;
+					width: 5em;
 					border-radius: 50%;
 					padding: 5px 10px;
 					border-color: var(--aqua);
@@ -86,17 +84,16 @@
 			}
 			.type-icon {
 				display: flex;
-				height: 8rem;
+				min-height: 8em;
 				flex-direction: column;
 				justify-content: flex-end;
 				align-items: center;
-				width: auto;
 				span {
-					font-size: 1.5rem;
+					font-size: 1.5em;
 				}
 				img {
-					height: 5rem;
-					width: 5rem;
+					height: 5em;
+					width: 5em;
 				}
 			}
 		}
@@ -104,20 +101,18 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
-			gap: 1rem;
-			margin: auto 0 1rem 0;
-			font-size: 1.5rem;
-			padding-left: 2rem;
+			gap: 1em;
+			margin: auto auto 1em auto;
+			font-size: 1.5em;
 			i {
-				margin: 0.5rem 1rem 0.5rem 0;
+				margin: 0.5em;
 			}
-			.left {
-				border-right: 2px solid var(--aqua);
-				padding-right: 1rem;
-			}
-			.right {
-				border-left: 2px solid var(--aqua);
-				padding-left: 1rem;
+			.center {
+				@media screen and (min-width: 43rem) {
+					padding: 0 1em;
+					border-left: 0.1em solid var(--aqua);
+					border-right: 0.1em solid var(--aqua);
+				}
 			}
 		}
 	}
@@ -125,13 +120,13 @@
 .search {
 	position: relative;
 	width: 250px;
-	margin-top: 1rem;
+	margin-top: 1em;
 	input {
 		box-sizing: border-box;
 		width: 100%;
-		padding: 9px;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		border-radius: 5px;
+		padding: 0.35em;
+		border: 0.1em solid rgba(255, 255, 255, 0.25);
+		border-radius: 0.25em;
 		outline: none;
 		color: #fff;
 		font-size: 1em;
@@ -149,6 +144,9 @@
 	}
 	input:valid ~ span,
 	input:focus ~ span {
+		@media screen and (max-width: 43rem) {
+			padding: 0 0.625em;
+		}
 		transform: translateX(6px) translateY(-8px);
 		font-size: 0.65em;
 		color: var(--aqua);
@@ -166,10 +164,42 @@
 		border-top: none;
 		.search-result {
 			cursor: pointer;
-			padding: 0.1rem 0.2rem;
+			padding: 0.1em 0.2em;
 		}
 		.search-result:hover {
 			background-color: var(--darkbgcolor);
+		}
+	}
+}
+
+@media screen and (max-width: 43em) {
+	.App {
+		font-size: 0.65em;
+		.loader {
+			margin-top: 10%;
+		}
+		.main {
+			.major-conditions {
+				font-size: 0.7em;
+				padding-top: 15%;
+				max-width: 100%;
+				display: flex;
+				justify-content: space-around;
+			}
+			.minor-conditions {
+				flex-direction: column;
+				.minor {
+					display: flex;
+					gap: 1rem;
+					justify-content: center;
+				}
+				.center {
+					min-width: 100%;
+					padding: 1em 0;
+					border-top: 0.1em solid var(--aqua);
+					border-bottom: 0.1em solid var(--aqua);
+				}
+			}
 		}
 	}
 }
