@@ -256,7 +256,11 @@ function App() {
 			) : (
 				loader()
 			)}
-			<div className="footer">Sav © 2022</div>
+			<div className="footer">
+				<p>
+					<a href="https://savcodes.dev">Sav Costabile </a> © 2022{" "}
+				</p>
+			</div>
 		</div>
 	);
 }
