@@ -257,8 +257,8 @@ function App() {
 				loader()
 			)}
 			<div className="footer">
-				<p>
-					<a href="https://savcodes.dev">Sav Costabile </a> © 2022{" "}
+				<p className="credit">
+					<a href="https://savcodes.dev">Sav Costabile</a>&nbsp;© 2022
 				</p>
 			</div>
 		</div>

@@ -18,7 +18,7 @@
 	.footer {
 		margin-top: auto;
 		height: 10vh;
-		background-color: var(--darkbgcolor);
+		// background-color: var(--darkbgcolor);
 		display: flex;
 		align-items: center;
 		width: 100vw;
@@ -170,6 +170,11 @@
 		.search-result:hover {
 			background-color: var(--darkbgcolor);
 		}
+	}
+}
+.credit {
+	a {
+		color: #48cae4;
 	}
 }
 
