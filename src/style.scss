@@ -173,6 +173,7 @@
 	}
 }
 .credit {
+	min-height: 5vh;
 	a {
 		color: #48cae4;
 	}
@@ -181,6 +182,7 @@
 @media screen and (max-width: 43em) {
 	.App {
 		font-size: 0.65em;
+		min-height: 100vh;
 		.loader {
 			margin-top: 5%;
 		}
@@ -206,6 +208,9 @@
 					border-bottom: 0.1em solid var(--aqua);
 				}
 			}
+		}
+		.footer {
+			display: none;
 		}
 	}
 }
