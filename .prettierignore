@@ -1,0 +1,5 @@
+#ignore these please
+normalize.css
+.git
+node_modules
+*.html
