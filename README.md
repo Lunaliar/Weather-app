@@ -1,6 +1,6 @@
 # Weather-App
 
-My weather app was so fun to make and my first time really spreading my metaphorical wings with React and Axios on my own. I wanted to use two separate API calls to focus on both the weather data and the search bar to give users the option to choose various cities since many share a name.
+Here is my weather app! I wanted to make one to practice working with an unknown API. OpenWeatherAPI is excellent, but it can be tricky to work with if you're trying to search with a city name, as you have to make an API call dependent on another API call. Nevertheless, it was a delight to work on it, and Axios made this kind of project a breeze.
 
 # Getting Started with Create React App
 
