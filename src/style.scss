@@ -53,7 +53,7 @@
     .major-conditions {
       min-width: 80%;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
       padding: 0.5em 1em;
       .info {
@@ -83,7 +83,7 @@
           color: var(--aqua);
           height: 5em;
           width: 5em;
-          font-size: 1em;
+          font-size: 1.2em;
           border-radius: 50%;
           padding: 5px 10px;
           border-color: var(--aqua);
@@ -103,6 +103,12 @@
           width: 5em;
         }
       }
+    }
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 100%;
     }
     .minor-conditions {
       display: flex;
@@ -126,7 +132,7 @@
 }
 .search {
   position: relative;
-  width: 250px;
+  width: 14em;
   margin-top: 1em;
   input {
     box-sizing: border-box;

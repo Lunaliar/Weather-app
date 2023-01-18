@@ -76,26 +76,24 @@ function App() {
 
   //? Components
 
-  const minorComponent = (title, icon, data, unit) => {
+  const minorPairing = (style, first, second) => {
+    const arr = [first, second]
     return (
-      <div title={`${title}`}>
-        <i className={`fa-solid fa-${icon}`} />
-        <span>{data}</span>
-        {unit}
+      <div className={style}>
+        {arr.map(x => {
+          return (
+            <div title={`${x.title}`}>
+              <i className={`fa-solid fa-${x.icon}`} />
+              <span>{x.data}</span>
+              {x.unit}
+            </div>
+          )
+        })}
       </div>
     )
   }
 
-  const minorPairing = (clssnme, first, second) => {
-    return (
-      <div className={clssnme}>
-        {minorComponent(first.title, first.icon, first.data, first.unit)}
-        {minorComponent(second.title, second.icon, second.data, second.unit)}
-      </div>
-    )
-  }
-
-  const search = () => {
+  const searchBar = () => {
     return (
       <div className="search">
         <input
@@ -132,7 +130,7 @@ function App() {
     )
   }
 
-  const unitButton = () => {
+  const UnitButton = () => {
     return (
       <div className="button">
         <button
@@ -146,7 +144,7 @@ function App() {
     )
   }
 
-  const mainInfo = () => {
+  const MainInfo = () => {
     return (
       <div className="info">
         <span className="city-name">{cityNames?.name}</span>
@@ -160,7 +158,7 @@ function App() {
     )
   }
 
-  const weatherIcon = () => {
+  const WeatherIcon = () => {
     return (
       <div className="type-icon">
         <span className="weather-main">{data.weather[0]?.main}</span>
@@ -178,50 +176,50 @@ function App() {
       <div className="loader">
         <i className="fa-solid fa-cloud-sun" />
         <h1>Weather My City?</h1>
-        {search()}
+        {searchBar()}
       </div>
     )
   }
 
   //! Component Data
-  const componentParams = [
-    {
+  const compParams = {
+    sunrise: {
       title: "Sunrise",
       icon: "sun",
       data: getTime(data.sys?.sunrise),
       unit: " AM",
     },
-    {
+    sunset: {
       title: "Sunset",
       icon: "moon",
       data: getTime(data.sys?.sunset),
       unit: " PM",
     },
-    {
-      title: "Hi-Temp",
-      icon: "temperature-arrow-up",
-      data: data.main?.temp_max,
-      unit: geo.units ? " °F" : " °C",
-    },
-    {
-      title: "Low-Temp",
-      icon: "temperature-arrow-down",
-      data: data.main?.temp_min,
-      unit: geo.units ? " °F" : " °C",
-    },
-    {
+    humid: {
       title: "Humidity",
       icon: "droplet",
       data: data.main?.humidity,
       unit: " %",
     },
-    {
+    wind: {
       title: "Wind",
       icon: "wind",
       data: data.wind?.speed,
       unit: geo.units ? " mph" : " kmh",
     },
-  ]
+    hiTemp: {
+      title: "Hi-Temp",
+      icon: "temperature-arrow-up",
+      data: data.main?.temp_max,
+      unit: geo.units ? " °F" : " °C",
+    },
+    lowTemp: {
+      title: "Low-Temp",
+      icon: "temperature-arrow-down",
+      data: data.main?.temp_min,
+      unit: geo.units ? " °F" : " °C",
+    },
+  }
 
   //? Return
   return (
@@ -229,23 +227,15 @@ function App() {
       {data.main ? (
         <div className="main ">
           <div className="major-conditions">
-            {unitButton()}
-            {mainInfo()}
-            {weatherIcon()}
+            <UnitButton />
+            <MainInfo />
+            <WeatherIcon />
           </div>
-          {search()}
+          <div className="search-container">{searchBar()}</div>
           <div className="minor-conditions">
-            {minorPairing("left minor", componentParams[0], componentParams[1])}
-            {minorPairing(
-              "center minor",
-              componentParams[4],
-              componentParams[5]
-            )}
-            {minorPairing(
-              "right minor",
-              componentParams[2],
-              componentParams[3]
-            )}
+            {minorPairing("left minor", compParams.sunrise, compParams.sunset)}
+            {minorPairing("center minor", compParams.humid, compParams.wind)}
+            {minorPairing("right minor", compParams.hiTemp, compParams.lowTemp)}
           </div>
         </div>
       ) : (
