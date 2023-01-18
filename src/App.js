@@ -7,13 +7,12 @@ function App() {
   //?State
   const [data, setData] = useState({})
   const [cityNames, setCityNames] = useState({})
+  const [cities, setCities] = useState([])
   const [input, setInput] = useState("")
   const [geo, setGeo] = useState({
     name: "",
     units: true,
   })
-
-  const [cities, setCities] = useState([])
 
   //? Axios callers
   const getCities = name => {
@@ -77,16 +76,17 @@ function App() {
 
   //? Components
 
+  const minorComponent = (title, icon, data, unit) => {
+    return (
+      <div title={`${title}`}>
+        <i className={`fa-solid fa-${icon}`} />
+        <span>{data}</span>
+        {unit}
+      </div>
+    )
+  }
+
   const minorPairing = (clssnme, first, second) => {
-    const minorComponent = (title, icon, data, unit) => {
-      return (
-        <div title={`${title}`}>
-          <i className={`fa-solid fa-${icon}`} />
-          <span>{data}</span>
-          {unit}
-        </div>
-      )
-    }
     return (
       <div className={clssnme}>
         {minorComponent(first.title, first.icon, first.data, first.unit)}
